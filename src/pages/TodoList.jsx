@@ -9,7 +9,7 @@ import { Header } from '../components/todos/Header'
 
 import { useEffect, useState } from 'react'
 import { getFromLocalStorage, setToLocalStorage } from '../utils/localStorage'
-import { withLoggerSimple } from '../HOC/withLoggerSimple'
+import { withLogger } from '../HOC/withLogger'
 
 export const TodoList = () => {
     const [todos, setTodos] = useState(getFromLocalStorage('todos'));
@@ -27,29 +27,30 @@ export const TodoList = () => {
         setIsLogOpen(isLogOpen => !isLogOpen)
     }
 
-    const SimpleLogInput = withLoggerSimple(InputForm)
-    const SimpleLogList = withLoggerSimple(List)
+    const [filter, setFilter] = useState(undefined);
+
+    const hanldeFilter = (value) => {
+        setFilter(value)
+    }
+
+    const SimpleLogInput = withLogger(InputForm);
+    const SimpleLogList = withLogger(List);
 
     return (
         <>
             <LogDrawer open={isLogOpen} handleOpen={handleLogOpen} />
-
             <Layout className='layout'>
                 <Header handleLogOpen={handleLogOpen} />
-
                 <Layout className='layout'>
                     <Content style={{ padding: '10px' }}>
-
                         <Row>
                             <CustomCol>
-                                {/* <InputForm controlTodos={[todos, handleTodos]} /> */}
                                 <SimpleLogInput controlTodos={[todos, handleTodos]} />
                             </CustomCol>
                         </Row>
                         <Row>
                             <CustomCol>
-                                {/* <List controlTodos={[todos, handleTodos]} /> */}
-                                <SimpleLogList controlTodos={[todos, handleTodos]} />
+                                <SimpleLogList controlTodos={[todos, handleTodos]} hanldeFilter={hanldeFilter} filter={filter} />
                             </CustomCol>
                         </Row>
                     </Content>

@@ -1,11 +1,11 @@
 import { UnorderedListOutlined } from '@ant-design/icons'
 import { Button, Flex } from 'antd'
-import { Header as AHeader } from 'antd/es/layout/layout'
+import { Header as AntHeader } from 'antd/es/layout/layout'
 
 export const Header = ({ handleLogOpen = false }) => {
 
     return (
-        <AHeader style={{ color: '#FFFFFF' }} >
+        <AntHeader style={{ color: '#FFFFFF' }} >
             <Flex justify='flex-start' style={{ marginTop: '16px' }}>
                 <Button
                     ghost
@@ -14,6 +14,6 @@ export const Header = ({ handleLogOpen = false }) => {
                     <UnorderedListOutlined />
                 </Button>
             </Flex>
-        </AHeader>
+        </AntHeader>
     )
 }

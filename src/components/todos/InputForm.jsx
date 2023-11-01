@@ -1,4 +1,4 @@
-import { Input, Form, Row, Col, Button } from 'antd'
+import { Input, Form, Row, Col } from 'antd'
 import { addTodo } from '../../utils/todos';
 import { useForm } from 'antd/es/form/Form';
 import { AddButton } from './AddButton';
@@ -14,8 +14,6 @@ export const InputForm = ({ controlTodos = [] }) => {
         form.resetFields();
     }
 
-    // const LoggedAddTodo = withLogger(AddButton);
-
     return (
         <>
             <Form form={form}
@@ -30,7 +28,6 @@ export const InputForm = ({ controlTodos = [] }) => {
                 }}
                 size='large'
                 onFinish={handleSubmitForm}
-                data-log={'log'}
             >
                 <Row>
                     <Col span={24}
@@ -40,7 +37,7 @@ export const InputForm = ({ controlTodos = [] }) => {
                             placeholder='todo...'
                             rules={[{
                                 required: 'true',
-                                message: 'Поле должно быть заполнено',
+                                message: 'Поле должно быть заполнено!',
                             }]}
                         >
                             <Input placeholder='todo...' />
@@ -48,9 +45,7 @@ export const InputForm = ({ controlTodos = [] }) => {
                     </Col>
                     <Col span={24} sm={{ span: 6 }} >
                         <Form.Item>
-                            {/* <LoggedAddTodo /> */}
-                            {/* <AddTodoButton /> */}
-                            <CustomButton Component={AddButton} name='addButton' />
+                            <CustomButton Component={AddButton} action='Добавлена'/>
                         </Form.Item>
                     </Col>
                 </Row>

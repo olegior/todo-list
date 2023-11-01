@@ -1,28 +1,45 @@
 import { getFromLocalStorage, setToLocalStorage } from "../utils/localStorage";
 
-export const withLogger = (Component, todo = {}) => {
+export const withLogger = (Component) => {
     const createLogString = (action) => {
         const time = new Date().toLocaleString();
         return `${time}: ${action} запись: `;
     }
 
-    const actions = {
-        DeleteTodoButton: createLogString('Удалена'),
-        AddTodoButton: createLogString('Добавлена'),
-        CheckTodoButton: createLogString(!todo.completed ? 'Выполнена' : 'Активна'),
-        EditTodoButton: createLogString('Изменена'),
-    }
-
     const log = getFromLocalStorage('log');
 
+    const getData = (node, name) => {
+        try {
+            return node.dataset[name] ? node.dataset[name] : getData(node.parentNode, name)
+        }
+        catch (err) {
+            return undefined;
+        }
+    }
 
-    const handleClick = () => {
-        setToLocalStorage('log', [...log, { action: actions[Component.name], todo: todo.todo }])
+    const getTodo = (json) => {
+        try{
+            return JSON.parse(json);
+        }
+        catch(err){
+            return {todo:null}
+        }
+    }
+
+    const handleClick = (e) => {
+        const action = getData(e.target, 'action');
+        if (action) {
+            const todo = getTodo(getData(e.target, 'log'));
+            setToLocalStorage('log', [...log, {
+                action: createLogString(action),
+                todo: todo.todo
+            }])
+        }
     }
     // eslint-disable-next-line react/display-name
     return (props) => {
         return (<>
-            <div onClick={handleClick} >
+            <div onClick={handleClick} name='logger'>
                 <Component {...props} />
             </div></>
         )

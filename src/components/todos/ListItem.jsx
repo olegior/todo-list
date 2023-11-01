@@ -16,16 +16,13 @@ export const ListItem = ({ todo, handleTodos }) => {
             style={{ width: '100%' }}
             align='middle'>
             <Col span={1}>
-                <CustomButton Component={Checkbox} onClick={() => handleCompletedTodo(id)} checked={completed} name='checkButton' />
+                <CustomButton Component={Checkbox} onClick={() => handleCompletedTodo(id)} checked={completed} action={completed ? 'Активна' : 'Выполнена'} />
             </Col>
             <Col span={20} offset={1}>
                 <Paragraph
                     editable={{
-                        // editing: false,
-                        onChange: (v) => {
-                            handleEditTodo(id, v)
-                        },
-                        icon: <CustomButton Component={EditOutlined} name='editButton' />
+                        onChange: (v) => { handleEditTodo(id, v) },
+                        icon: <CustomButton Component={EditOutlined} action='Изменена' />
                     }}
 
                     delete={completed}
@@ -38,7 +35,7 @@ export const ListItem = ({ todo, handleTodos }) => {
                 </Paragraph>
             </Col>
             <Col span={1} offset={1}>
-                <CustomButton Component={DeleteOutlined} onClick={() => handleDeleteTodo(id)} style={{ fontSize: '20px' }} name='deleteButton' />
+                <CustomButton Component={DeleteOutlined} onClick={() => handleDeleteTodo(id)} style={{ fontSize: '20px' }} action='Удалена' />
             </Col>
         </Row>
     )

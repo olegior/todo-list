@@ -1,13 +1,8 @@
 
-export const CustomButton = ({ Component = null, onClick = null, checked = false, style = {}, name = '' }) => {
+export const CustomButton = ({ Component, ...props }) => {
     return (
         <>
-            <Component
-                onClick={onClick}
-                checked={checked}
-                style={style}
-                data-name={name}
-            />
+            <Component {...props} />
         </>
     )
 }
