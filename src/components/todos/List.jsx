@@ -15,7 +15,8 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
     }
 
     const handleEditTodo = (id, newTodo) => {
-        handleTodos(editTodo(todos, id, newTodo))
+        if (newTodo)
+            handleTodos(editTodo(todos, id, newTodo))
     }
 
     const options = [
