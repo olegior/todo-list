@@ -1,7 +1,7 @@
-import {Button} from 'antd'
+import { Button } from 'antd'
 
 export const AddButton = (props) => {
     return (
-        <Button type="primary" ghost htmlType="submit" {...props}> Добавить </Button>
+        <Button type="primary" ghost htmlType="submit" {...props}></Button>
     )
 }

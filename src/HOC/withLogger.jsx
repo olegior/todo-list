@@ -6,7 +6,7 @@ export const withLogger = (Component) => {
         return `${time}: ${action} запись: `;
     }
 
-    const log = getFromLocalStorage('log');
+    const log = getFromLocalStorage('log') || [];
 
     const getData = (node, name) => {
         try {
@@ -33,7 +33,7 @@ export const withLogger = (Component) => {
             const todo = getTodo(getData(e.target, 'log'));
             setToLocalStorage('log', [...log, {
                 action: createLogString(action),
-                todo: todo.todo
+                todo: todo.title //consider to api: todo.todo -> todo.title
             }])
         }
     }

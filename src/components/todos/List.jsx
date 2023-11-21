@@ -1,4 +1,4 @@
-import { List as AList } from "antd";
+import { List as AntList } from "antd";
 import { ListItem } from "./ListItem";
 import { Filter } from "./Filter";
 import { deleteTodo, editTodo, filterTodos, toggleTodo } from "../../utils/todos";
@@ -8,15 +8,17 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
     const [todos, handleTodos] = controlTodos;
 
     const handleDeleteTodo = (id) => {
-        handleTodos(deleteTodo(todos, id))
+        // handleTodos(deleteTodo(todos, id))
+        handleTodos(deleteTodo(id));
     }
     const handleCompletedTodo = (id) => {
-        handleTodos(toggleTodo(todos, id))
+        // handleTodos(toggleTodo(todos, id))
+        handleTodos(toggleTodo(id));
     }
 
     const handleEditTodo = (id, newTodo) => {
         if (newTodo)
-            handleTodos(editTodo(todos, id, newTodo))
+            handleTodos(editTodo(id, newTodo))
     }
 
     const options = [
@@ -27,7 +29,7 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
 
     return (
         <>
-            {!!todos.length && <AList
+            {!!todos.length && <AntList
                 className="control"
                 size="medium"
                 header={<Filter hanldeFilter={[filter, hanldeFilter]} options={options} />}
@@ -35,9 +37,9 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
                 dataSource={filterTodos(todos, filter)}
                 pagination={{ align: 'center', hideOnSinglePage: true, }}
                 renderItem={(todo) =>
-                    <AList.Item style={{ borderWidth: '2px', }}>
+                    <AntList.Item style={{ borderWidth: '2px', }}>
                         <ListItem todo={todo} handleTodos={{ handleCompletedTodo, handleDeleteTodo, handleEditTodo }} />
-                    </AList.Item>
+                    </AntList.Item>
                 }
             />}
         </>

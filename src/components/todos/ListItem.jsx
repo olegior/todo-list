@@ -7,7 +7,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 export const ListItem = ({ todo, handleTodos }) => {
     const { Paragraph } = Typography;
     const { handleCompletedTodo, handleDeleteTodo, handleEditTodo } = handleTodos;
-    const { id, todo: text, completed } = todo;
+    const { id, title: text, isCompleted: completed } = todo;
 
     return (
         <Row

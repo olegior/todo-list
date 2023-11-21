@@ -1,17 +1,20 @@
 import { Input, Form, Row, Col } from 'antd'
-import { addTodo } from '../../utils/todos';
 import { useForm } from 'antd/es/form/Form';
 import { AddButton } from './AddButton';
 import { CustomButton } from './CustomButton';
+import { addTodo } from '../../utils/todos';
 
 export const InputForm = ({ controlTodos = [] }) => {
     const [form] = useForm();
     const [todos, handleTodos] = controlTodos;
 
     const handleSubmitForm = (e) => {
-        const newTodo = { id: Date.now(), todo: e.todo, completed: false };
-        handleTodos(addTodo(todos, newTodo));
+        // const newTodo = { id: Date.now(), todo: e.todo, completed: false };
+        // handleTodos(addTodo(todos, newTodo));
+        // handleTodos(addTodo(todos, {title: e.todo}));
+        handleTodos(addTodo(e.todo));
         form.resetFields();
+
     }
 
     return (
@@ -33,6 +36,7 @@ export const InputForm = ({ controlTodos = [] }) => {
                     <Col span={24}
                         sm={{ span: 18 }}>
                         <Form.Item
+                            label='Введите текст'
                             name='todo'
                             placeholder='todo...'
                             rules={[{
@@ -45,7 +49,7 @@ export const InputForm = ({ controlTodos = [] }) => {
                     </Col>
                     <Col span={24} sm={{ span: 6 }} >
                         <Form.Item>
-                            <CustomButton Component={AddButton} action='Добавлена'/>
+                            <CustomButton Component={AddButton} action='Добавлена' title='Добавить' />
                         </Form.Item>
                     </Col>
                 </Row>

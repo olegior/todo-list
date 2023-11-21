@@ -1,5 +1,5 @@
 
-export const CustomButton = ({ Component = null, onClick = null, checked = false, style = {}, action = '', }) => {
+export const CustomButton = ({ Component = null, onClick = null, checked = false, style = {}, action = '', title }) => {
     return (
         <>
             <Component
@@ -7,7 +7,7 @@ export const CustomButton = ({ Component = null, onClick = null, checked = false
                 checked={checked}
                 style={style}
                 data-action={action}
-            />
+            >{title}</Component>
         </>
     )
 }

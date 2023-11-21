@@ -5,10 +5,15 @@ export const setToLocalStorage = (name, data) => {
 export const getFromLocalStorage = (name) => {
     try {
         const data = JSON.parse(localStorage.getItem(name));
-        return Array.isArray(data) ? data : [];
+        // return Array.isArray(data) ? data : [];
+        return data;
     }
     catch (e) {
         console.log(console.error(e));
-        return [];
+        // return [];
     }
+}
+
+export const deleteFromLocalStorage = (name) => {
+    localStorage.removeItem(name);
 }
