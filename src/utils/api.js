@@ -17,3 +17,12 @@ export const sendRequest = async (url, method, body) => {
         return error.response.data;
     }
 }
+
+export const getData = (node, name) => {
+    try {
+        return node.dataset[name] ? node.dataset[name] : getData(node.parentNode, name)
+    }
+    catch (err) {
+        return undefined;
+    }
+}

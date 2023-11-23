@@ -6,7 +6,7 @@ import { getFromLocalStorage } from './utils/localStorage';
 import { useState } from 'react';
 
 function App() {
-  const [token, setToken] = useState(getFromLocalStorage('token'));
+  const [token, setToken] = useState(getFromLocalStorage('token')); // HOC
   return (
     <>
       <BrowserRouter>

@@ -4,9 +4,9 @@ import { CustomButton } from "./CustomButton";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // eslint-disable-next-line react/prop-types
-export const ListItem = ({ todo, handleTodos }) => {
+export const ListItem = ({ todo, handleEditTodo }) => {
     const { Paragraph } = Typography;
-    const { handleCompletedTodo, handleDeleteTodo, handleEditTodo } = handleTodos;
+    // const { handleCompletedTodo, handleDeleteTodo, handleEditTodo } = handleTodos;
     const { id, title: text, isCompleted: completed } = todo;
 
     return (
@@ -16,7 +16,12 @@ export const ListItem = ({ todo, handleTodos }) => {
             style={{ width: '100%' }}
             align='middle'>
             <Col span={1}>
-                <CustomButton Component={Checkbox} onClick={() => handleCompletedTodo(id)} checked={completed} action={completed ? 'Активна' : 'Выполнена'} />
+                <CustomButton Component={Checkbox}
+                    //  onClick={() => handleCompletedTodo(id)} 
+                    checked={completed} action={completed ? 'Активна' : 'Выполнена'}
+                    type={'check'}
+                    id={id}
+                />
             </Col>
             <Col span={20} offset={1}>
                 <Paragraph
@@ -35,7 +40,11 @@ export const ListItem = ({ todo, handleTodos }) => {
                 </Paragraph>
             </Col>
             <Col span={1} offset={1}>
-                <CustomButton Component={DeleteOutlined} onClick={() => handleDeleteTodo(id)} style={{ fontSize: '20px' }} action='Удалена' />
+                <CustomButton Component={DeleteOutlined} 
+                // onClick={() => handleDeleteTodo(id)} 
+                type={'delete'}
+                id={id}
+                style={{ fontSize: '20px' }} action='Удалена' />
             </Col>
         </Row>
     )

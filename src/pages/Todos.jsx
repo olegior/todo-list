@@ -1,5 +1,5 @@
 import { Content } from 'antd/es/layout/layout'
-import { Layout, Row, } from 'antd'
+import { Layout, Row, Skeleton, } from 'antd'
 
 import { List } from '../components/todos/List'
 import { LogDrawer } from '../components/todos/LogDrawer'
@@ -16,11 +16,19 @@ import { addTodo, getTodos } from '../utils/todos'
 
 export const Todos = () => {
     const [todos, setTodos] = useState([]);
+    const [isDisabled, setIsDisabled] = useState(false);
     // *************
-    const [requestTime, setRequestTime] = useState(Date.now());
+    // const [requestTime, setRequestTime] = useState(Date.now());
+    const [requestTime, setRequestTime] = useState(0);
     // *************
 
     useEffect(() => {
+        setIsDisabled(true);
+    }, [todos])
+
+
+    useEffect(() => {
+        setIsDisabled(false);
         getTodos().then(setTodos);
     }, [requestTime])
     // *************
@@ -70,7 +78,8 @@ export const Todos = () => {
                         <Row>
                             <CustomCol>
                                 {/* <LogList controlTodos={[todos, handleTodos]} hanldeFilter={hanldeFilter} filter={filter} /> */}
-                                <LogList controlTodos={[todos, () => setRequestTime(Date.now())]} hanldeFilter={hanldeFilter} filter={filter} />
+                                {/* <LogList controlTodos={[todos, () => setRequestTime(Date.now())]} hanldeFilter={hanldeFilter} filter={filter} /> */}
+                                <LogList isDisabled={isDisabled} controlTodos={[todos, () => setRequestTime((prev) => ++prev)]} hanldeFilter={hanldeFilter} filter={filter} />
                             </CustomCol>
                         </Row>
                     </Content>

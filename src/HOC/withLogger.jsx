@@ -1,3 +1,4 @@
+import { getData } from "../utils/api";
 import { getFromLocalStorage, setToLocalStorage } from "../utils/localStorage";
 
 export const withLogger = (Component) => {
@@ -7,15 +8,6 @@ export const withLogger = (Component) => {
     }
 
     const log = getFromLocalStorage('log') || [];
-
-    const getData = (node, name) => {
-        try {
-            return node.dataset[name] ? node.dataset[name] : getData(node.parentNode, name)
-        }
-        catch (err) {
-            return undefined;
-        }
-    }
 
     const getTodo = (json) => {
         try{
