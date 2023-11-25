@@ -10,7 +10,7 @@ export const Filter = ({ hanldeFilter, options = [] }) => {
             value={filter}
             optionType="button"
             buttonStyle="outline"
-            size='middle'
+            size='large'
             onChange={(e) => setFilter(e.target.value)}
         >
         </Radio.Group>

@@ -15,6 +15,7 @@ body {
   min-height: 100dvh;
   /* background-color: #1E293B; */
   /* background-color: #EBE7D3; */
+  background-color: #e3e3e3;
 }
 
 .control {
@@ -23,11 +24,16 @@ body {
 }
 
 .layout {
-  background-color: #FFFFFF;
+  /* background-color: #FFFFFF; */
+  background-color: #e3e3e3;
 }
 
 #root {
   width: 100%;
   margin: 0 auto;
   text-align: center;
+}
+
+.customButton:hover {
+  transform: scale(1.1);
 }

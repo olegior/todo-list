@@ -20,7 +20,7 @@ export const withLogger = (Component) => {
 
     const handleClick = (e) => {
         const action = getData(e.target, 'action');
-        console.log(action);
+        // console.log(action);
         if (action) {
             const todo = getTodo(getData(e.target, 'log'));
             setToLocalStorage('log', [...log, {

@@ -1,17 +1,14 @@
 import { UnorderedListOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
-import { CustomButton } from './CustomButton';
-import { AddButton } from './AddButton';
 import { deleteFromLocalStorage } from '../../utils/localStorage';
-import { redirect, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-export const Header = ({ handleLogOpen = false }) => {
+export const Header = ({ handleLogOpen }) => {
     const navigate = useNavigate()
     const logout = () => {
         deleteFromLocalStorage('token');
-        // navigate('/login', { replace: true });
-        navigate(0)
+        navigate(0);
     }
     return (
         <AntHeader style={{ color: '#FFFFFF' }} >
@@ -19,10 +16,15 @@ export const Header = ({ handleLogOpen = false }) => {
                 <Button
                     ghost
                     onClick={handleLogOpen}>
-                    История
                     <UnorderedListOutlined />
+                    История
                 </Button>
-                <CustomButton Component={LogoutOutlined} onClick={logout} />
+                <Button
+                    ghost
+                    onClick={logout}>
+                    <LogoutOutlined />
+                    Выйти
+                </Button>
             </Flex>
         </AntHeader>
     )

@@ -1,6 +1,8 @@
 import { sendRequest } from "./api"
+import { getFromLocalStorage } from "./localStorage";
 const URL = 'todos';
-const AUTHTOKEN = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdldDJwYXlAcGF5aW4uY29tIiwiaWQiOjMyOSwiaWF0IjoxNzAwMzg0MzM5fQ.kqF1oRrWPxV58S3kLcloIWpD21zKVOAS1z9h2ZYhVq4`;
+// const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdldDJwYXlAcGF5aW4uY29tIiwiaWQiOjMyOSwiaWF0IjoxNzAwMzg0MzM5fQ.kqF1oRrWPxV58S3kLcloIWpD21zKVOAS1z9h2ZYhVq4`;
+const token = getFromLocalStorage('token');
 //change all occurences completed -> isCompleted
 
 // export const addTodo = (todos, todo) => {
@@ -36,7 +38,7 @@ export const toggleTodo = async (id) => {
 // }
 
 export const editTodo = async (id, newTodo) => {
-    return await sendRequest(`${URL}/${id}`, 'patch', { title: newTodo }, AUTHTOKEN)
+    return await sendRequest(`${URL}/${id}`, 'patch', { title: newTodo }, token)
 }
 
 // filters

@@ -3,6 +3,7 @@ export const CustomButton = ({ Component = null, onClick = null, checked = false
     return (
         <>
             <Component
+                className='customButton'
                 onClick={onClick}
                 checked={checked}
                 style={{ cursor: 'pointer', ...style }}

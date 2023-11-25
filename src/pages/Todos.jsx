@@ -1,5 +1,5 @@
 import { Content } from 'antd/es/layout/layout'
-import { Layout, Row, Skeleton, } from 'antd'
+import { Layout, Row, } from 'antd'
 
 import { List } from '../components/todos/List'
 import { LogDrawer } from '../components/todos/LogDrawer'
@@ -56,7 +56,13 @@ export const Todos = () => {
     const LogInput = withLogger(CustomForm);
     const LogList = withLogger(List);
 
-    const fields = [{ label: 'ToDo...', name: 'todo', placeholder: 'введите текст...', }];
+    const fields = [
+        {
+            name: 'todo', placeholder: 'введите текст...', rule: [
+                { type: 'string', }, { whitespace: true, message: 'Уберите лишние пробелы!' },
+            ]
+        }
+    ];
     const button = <CustomButton Component={AddButton} action='Добавлена' title='Добавить' />;
     const addTodoHandler = (e) => {
         addTodo(e.todo);
