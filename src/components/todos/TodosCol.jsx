@@ -1,5 +1,5 @@
 import { Col } from 'antd';
-export const CustomCol = ({ children }) => {
+export const TodosCol = ({ children }) => {
     return (
         <Col
             span={24}

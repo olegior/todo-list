@@ -1,23 +1,24 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { LoginForm } from './pages/LoginForm';
-import { RegisterForm } from './pages/RegisterForm';
-import { Todos } from './pages/Todos';
+import { LoginPage } from './pages/LoginPage';
+import { RegisterPage } from './pages/RegisterPage';
+import { TodosPage } from './pages/TodosPage';
 import { getFromLocalStorage } from './utils/localStorage';
 import { useState } from 'react';
-import { TodosCopy } from './pages/Todoscopy';
 
 function App() {
-  const [token] = useState(getFromLocalStorage('token')); // HOC?
-  const navigateToRoot = <Navigate to='login' />;
+
+  const [token] = useState(getFromLocalStorage('token'));
+  const toLogin = <Navigate to='login' />;
+  const toRoot = <Navigate to='/' />;
+
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={token ? <Todos /> : navigateToRoot} errorElement={navigateToRoot} />
-          <Route path='login' element={<LoginForm />} />
-          <Route path='register' element={<RegisterForm />} />
-          <Route path='test' element={<TodosCopy />} />
-          <Route path='*' element={navigateToRoot} />
+          <Route path='*' element={toRoot} />
+          <Route path='/' element={token ? <TodosPage /> : toLogin} />
+          <Route path='login' element={<LoginPage />} />
+          <Route path='register' element={<RegisterPage />} />
         </Routes>
       </BrowserRouter>
     </>

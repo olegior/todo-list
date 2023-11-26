@@ -1,7 +1,7 @@
-import { Input, Form, Row, Col, Radio } from 'antd'
+import { Input, Form as AntForm, Row, Col, Radio } from 'antd'
 import { useForm } from 'antd/es/form/Form';
 
-export const CustomForm = ({ name, fields = [], cb, button }) => {
+export const Form = ({ name, fields = [], cb, button }) => {
     const [form] = useForm();
     const formStyle = {
         padding: '40px 40px 0',
@@ -15,7 +15,7 @@ export const CustomForm = ({ name, fields = [], cb, button }) => {
             message: 'Поле должно быть заполнено!',
         },
     ]
-    const password = <Input.Password placeholder={'Введите пароль!'} />;
+    const password = <Input.Password placeholder={'введите пароль'} />;
     const gender = <Radio.Group value={'male'}>
         <Radio.Button value={'male'}>М</Radio.Button>
         <Radio.Button value={'female'}>Ж</Radio.Button>
@@ -30,7 +30,7 @@ export const CustomForm = ({ name, fields = [], cb, button }) => {
         const trimmedData = {};
         for (let key in data) {
             trimmedData[key] = data[key].trim();
-            console.log(trimmedData[key]);
+            // console.log(trimmedData[key]);
         }
         form.setFieldsValue(trimmedData)
         cb(trimmedData);
@@ -38,7 +38,7 @@ export const CustomForm = ({ name, fields = [], cb, button }) => {
 
 
     return (
-        <Form form={form}
+        <AntForm form={form}
             name={name}
             className="control"
             style={formStyle}
@@ -53,17 +53,17 @@ export const CustomForm = ({ name, fields = [], cb, button }) => {
                         <Col span={24}
                         // sm={{ span: 18 }}
                         >
-                            <Form.Item
+                            <AntForm.Item
                                 label={label}
                                 name={name}
                                 placeholder={placeholder}
                                 labelCol={{ span: 4 }}
-                                wrapperCol={{ offset: 1 }}
+                                wrapperCol={label && { offset: 1 }}
                                 rules={[...rules, ...rule]}
                                 validateDebounce={250}
                             >
                                 {inpType[type] || <Input placeholder={placeholder} type={type} max={100} min={10} />}
-                            </Form.Item>
+                            </AntForm.Item>
                         </Col>
                     </Row>)
             })}
@@ -71,11 +71,11 @@ export const CustomForm = ({ name, fields = [], cb, button }) => {
                 <Col span={24}
                 // sm={{ span: 6 }} 
                 >
-                    <Form.Item>
+                    <AntForm.Item>
                         {button}
-                    </Form.Item>
+                    </AntForm.Item>
                 </Col>
             </Row>
-        </Form>
+        </AntForm>
     )
 }

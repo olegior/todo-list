@@ -1,14 +1,10 @@
-import { CustomForm } from '../components/todos/CustomForm';
-import { CustomButton } from '../components/todos/CustomButton';
-import { AddButton } from '../components/todos/AddButton';
-import { Link } from 'react-router-dom';
-import { Flex } from 'antd';
-import { CustomCol } from '../components/todos/CustomCol';
+
 import { sendRequest } from '../utils/api';
 import { useNotification } from '../hooks/useNotification';
+import { FormPage } from '../components/form/FormPage';
 
 
-export const RegisterForm = () => {
+export const RegisterPage = () => {
 
     const [showNotification, contextHolder] = useNotification(true);
 
@@ -23,21 +19,10 @@ export const RegisterForm = () => {
         { label: 'gender', name: 'gender', placeholder: 'выберите пол', type: 'gender' },
         { label: 'age', name: 'age', placeholder: 'введите возраст', type: 'number' },
     ];
-    const button = <CustomButton Component={AddButton} action='Добавлена' title={'Зарегистрироваться'} />;
-    const form = <CustomForm name="register" fields={fields} button={button} cb={handleRegister} />
 
     return (
         <>
-            <Flex
-                justify='center'
-                vertical='vertical'
-            >
-                {contextHolder}
-                <CustomCol>
-                    {form}
-                    <p>Уже есть аккаунт? <Link to='/login'>Войти</Link></p>
-                </CustomCol>
-            </Flex>
+            <FormPage name={'register'} fields={fields} buttonTitle={'Зарегистрироваться'} cb={handleRegister} contextHolder={contextHolder} path={'/login'} />
         </>
     )
 }

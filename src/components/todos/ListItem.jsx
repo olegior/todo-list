@@ -1,14 +1,12 @@
 /* eslint-disable react/prop-types */
 import { Col, Row, Typography, Checkbox } from "antd";
-import { CustomButton } from "./CustomButton";
+import { TodosButton } from "./TodosButton";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 // eslint-disable-next-line react/prop-types
 export const ListItem = ({ todo, handleEditTodo }) => {
     const { Paragraph } = Typography;
-    // const { handleCompletedTodo, handleDeleteTodo, handleEditTodo } = handleTodos;
     const { id, title: text, isCompleted: completed } = todo;
-
     return (
         <Row
             data-log={JSON.stringify(todo)}
@@ -16,8 +14,7 @@ export const ListItem = ({ todo, handleEditTodo }) => {
             style={{ width: '100%' }}
             align='middle'>
             <Col span={1}>
-                <CustomButton Component={Checkbox}
-                    //  onClick={() => handleCompletedTodo(id)} 
+                <TodosButton Component={Checkbox}
                     checked={completed} action={completed ? 'Активна' : 'Выполнена'}
                     type={'check'}
                     id={id}
@@ -27,7 +24,7 @@ export const ListItem = ({ todo, handleEditTodo }) => {
                 <Paragraph
                     editable={{
                         onChange: (v) => { handleEditTodo(id, v) },
-                        icon: <CustomButton Component={EditOutlined} action='Изменена' />
+                        icon: <TodosButton Component={EditOutlined} action='Изменена' />
                     }}
 
                     delete={completed}
@@ -40,11 +37,10 @@ export const ListItem = ({ todo, handleEditTodo }) => {
                 </Paragraph>
             </Col>
             <Col span={1} offset={1}>
-                <CustomButton Component={DeleteOutlined} 
-                // onClick={() => handleDeleteTodo(id)} 
-                type={'delete'}
-                id={id}
-                style={{ fontSize: '20px' }} action='Удалена' />
+                <TodosButton Component={DeleteOutlined}
+                    type={'delete'}
+                    id={id}
+                    style={{ fontSize: '20px' }} action='Удалена' />
             </Col>
         </Row>
     )

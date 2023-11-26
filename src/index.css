@@ -14,17 +14,17 @@ body {
   display: flex;
   min-height: 100dvh;
   /* background-color: #1E293B; */
+  /* background-color: #F5FFF2; */
+  /* background-color: #FFFFFF; */
   /* background-color: #EBE7D3; */
   background-color: #e3e3e3;
 }
 
 .control {
-  /* background-color: #F5FFF2; */
   background-color: #F5F5F5;
 }
 
 .layout {
-  /* background-color: #FFFFFF; */
   background-color: #e3e3e3;
 }
 
@@ -34,6 +34,6 @@ body {
   text-align: center;
 }
 
-.customButton:hover {
+.TodosButton:hover {
   transform: scale(1.1);
 }

@@ -2,7 +2,7 @@ import { List as AntList } from "antd";
 import { ListItem } from "./ListItem";
 import { Filter } from "./Filter";
 import { deleteTodo, editTodo, filterTodos, toggleTodo } from "../../utils/todos";
-import { getData } from "../../utils/api";
+import { getDataAction } from "../../utils/api";
 
 export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
 
@@ -20,10 +20,10 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
             check: toggleTodo,
             delete: deleteTodo,
         }
-        const type = getData(e.target, 'type');
+        const type = getDataAction(e.target, 'type');
         if (type) {
-            const response = await handlers[type](getData(e.target, 'id'));
-            update(response);
+            const response = await handlers[type](getDataAction(e.target, 'id'));
+            update(response[0] || response); // найти проблему
         }
     }
 
@@ -45,7 +45,6 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
                 pagination={{ align: 'center', hideOnSinglePage: true, }}
                 renderItem={(todo) =>
                     <AntList.Item style={{ borderWidth: '2px', }}>
-                        {/* <ListItem todo={todo} handleTodos={{ handleCompletedTodo, handleDeleteTodo, handleEditTodo }} /> */}
                         <ListItem todo={todo} handleEditTodo={handleEditTodo} />
                     </AntList.Item>
                 }

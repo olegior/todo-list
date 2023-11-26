@@ -1,9 +1,9 @@
 
-export const CustomButton = ({ Component = null, onClick = null, checked = false, style = {}, action = '', title, type, id }) => {
+export const TodosButton = ({ Component = null, onClick = null, checked = false, style = {}, action = '', title, type, id }) => {
     return (
         <>
             <Component
-                className='customButton'
+                className='TodosButton'
                 onClick={onClick}
                 checked={checked}
                 style={{ cursor: 'pointer', ...style }}

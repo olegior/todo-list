@@ -4,6 +4,7 @@ export const useNotification = (showSuccess = false, placement = 'bottom') => {
     const [api, contextHolder] = notification.useNotification();
     const fn = (response) => {
         const showNotification = (type, response) => {
+            // console.log(response);
             api[type]({
                 message: response.param,
                 description: response.msg,
@@ -14,7 +15,7 @@ export const useNotification = (showSuccess = false, placement = 'bottom') => {
         response.message && showNotification('error', { msg: response.message });
 
         if (!response.hasOwnProperty('success') && !response.hasOwnProperty('message') && showSuccess) {
-            showNotification('success', { msg: 'Успешно' })
+            showNotification('success', { msg: `Успешно: ${response?.title}` })
         }
     }
 

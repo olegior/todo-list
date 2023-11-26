@@ -3,10 +3,10 @@ import { Layout, Row, } from 'antd'
 
 import { List } from '../components/todos/List'
 import { LogDrawer } from '../components/todos/LogDrawer'
-import { CustomCol } from '../components/todos/CustomCol'
-import { CustomButton } from '../components/todos/CustomButton'
-import { AddButton } from '../components/todos/AddButton'
-import { CustomForm } from '../components/todos/CustomForm'
+import { TodosCol } from '../components/todos/TodosCol'
+import { TodosButton } from '../components/todos/TodosButton'
+import { SubmitButton } from '../components/form/SubmitButton'
+import { Form } from '../components/form/Form'
 import { Header } from '../components/todos/Header'
 
 import { useEffect, useState } from 'react'
@@ -15,37 +15,47 @@ import { withLogger } from '../HOC/withLogger'
 import { addTodo, getTodos } from '../utils/todos'
 import { useNotification } from '../hooks/useNotification'
 
-export const TodosCopy = () => {
+export const TodosPage = () => {
     const [todos, setTodos] = useState([]);
     const [response, setResponse] = useState();
-    const [showSuccess, setShowSuccess] = useState(false);
+    const [showSuccess, setShowSuccess] = useState(true);
+    const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
+    const [filter, setFilter] = useState(undefined);
+    const [isLogOpen, setIsLogOpen] = useState(false);
+
+    const LogInput = withLogger(Form);
+    const LogList = withLogger(List);
 
     useEffect(() => {
         const loadTodos = async () => {
             const response = await getTodos();
-            showNotification(response);
+            // showNotification(response);
             setTodos(response)
         }
         loadTodos();
     }, [response])
 
-
-    const [isLogOpen, setIsLogOpen] = useState(false);
-
     const handleLogOpen = () => {
         setIsLogOpen(isLogOpen => !isLogOpen)
     }
-
-    const [filter, setFilter] = useState(undefined);
 
     const hanldeFilter = (value) => {
         setFilter(value)
     }
 
-    const LogInput = withLogger(CustomForm);
-    const LogList = withLogger(List);
+    const handleSuccess = () => {
+        setShowSuccess(prev => !prev);
+    }
 
-    const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight')
+    const handleShow = (e) => {
+        console.log();
+        showNotification(e);
+        setResponse(e);
+    }
+
+    const handleAddTodo = async (e) => {
+        handleShow(await addTodo(e.todo));
+    }
 
     const fields = [
         {
@@ -54,28 +64,26 @@ export const TodosCopy = () => {
             ]
         }
     ];
-    const button = <CustomButton Component={AddButton} action='Добавлена' title='Добавить' />;
-    const addTodoHandler = (e) => {
-        setResponse(addTodo(e.todo));
-    }
+    const button = <TodosButton Component={SubmitButton} action='Добавлена' title='Добавить' />;
+
 
     return (
         <>
             <LogDrawer open={isLogOpen} handleOpen={handleLogOpen} />
             {contextHolder}
             <Layout className='layout'>
-                <Header handleLogOpen={handleLogOpen} showSuccess={showSuccess} setShowSuccess={setShowSuccess} />
+                <Header handleLogOpen={handleLogOpen} showSuccess={showSuccess} handleSuccess={handleSuccess} />
                 <Layout className='layout'>
                     <Content style={{ padding: '10px' }}>
                         <Row>
-                            <CustomCol>
-                                <LogInput name="todoInput" fields={fields} button={button} cb={addTodoHandler} />
-                            </CustomCol>
+                            <TodosCol>
+                                <LogInput name="todoInput" fields={fields} button={button} cb={handleAddTodo} />
+                            </TodosCol>
                         </Row>
                         <Row>
-                            <CustomCol>
-                                <LogList controlTodos={[todos, (e) => setResponse(e)]} hanldeFilter={hanldeFilter} filter={filter} />
-                            </CustomCol>
+                            <TodosCol>
+                                <LogList controlTodos={[todos, handleShow]} hanldeFilter={hanldeFilter} filter={filter} />
+                            </TodosCol>
                         </Row>
                     </Content>
                 </Layout>

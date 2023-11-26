@@ -2,7 +2,6 @@ import axios from "axios";
 import { getFromLocalStorage } from "./localStorage";
 
 const BASEURL = 'https://todo-redev.herokuapp.com/api/';
-
 const token = getFromLocalStorage('token');
 
 export const sendRequest = async (url, method, body) => {
@@ -17,9 +16,9 @@ export const sendRequest = async (url, method, body) => {
     }
 }
 
-export const getData = (node, name) => {
+export const getDataAction = (node, name) => {
     try {
-        return node.dataset[name] ? node.dataset[name] : getData(node.parentNode, name)
+        return node.dataset[name] ? node.dataset[name] : getDataAction(node.parentNode, name)
     }
     catch (err) {
         return undefined;
