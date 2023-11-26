@@ -1,7 +1,7 @@
 import { sendRequest } from "./api"
 import { getFromLocalStorage } from "./localStorage";
+
 const URL = 'todos';
-// const token = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImdldDJwYXlAcGF5aW4uY29tIiwiaWQiOjMyOSwiaWF0IjoxNzAwMzg0MzM5fQ.kqF1oRrWPxV58S3kLcloIWpD21zKVOAS1z9h2ZYhVq4`;
 const token = getFromLocalStorage('token');
 //change all occurences completed -> isCompleted
 

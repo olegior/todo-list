@@ -8,22 +8,22 @@ export const List = ({ controlTodos = [], hanldeFilter, filter }) => {
 
     const [todos, update] = controlTodos;
 
-    const handleEditTodo = (id, newTodo) => {
+    const handleEditTodo = async (id, newTodo) => {
         if (newTodo) {
-            handleTodos(editTodo(id, newTodo));
-            update();
+            const response = await editTodo(id, newTodo);
+            update(response);
         }
     }
 
-    const handleTodos = (e) => {
+    const handleTodos = async (e) => {
         const handlers = {
             check: toggleTodo,
             delete: deleteTodo,
         }
         const type = getData(e.target, 'type');
         if (type) {
-            handlers[type](getData(e.target, 'id'));
-            update();
+            const response = await handlers[type](getData(e.target, 'id'));
+            update(response);
         }
     }
 

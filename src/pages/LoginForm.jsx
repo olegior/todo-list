@@ -6,20 +6,14 @@ import { getFromLocalStorage, setToLocalStorage } from '../utils/localStorage';
 import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { CustomForm } from '../components/todos/CustomForm';
-import { Flex, notification } from 'antd';
+import { Flex } from 'antd';
 import { CustomCol } from '../components/todos/CustomCol';
+import { useNotification } from '../hooks/useNotification';
 
 export const LoginForm = () => {
   const [isLogged] = useState(getFromLocalStorage('token'));
   const navigate = useNavigate();
-  const [api, contextHolder] = notification.useNotification();
-
-  const openNotififcation = (msg) => {
-    api.error({
-      message: msg,
-      placement: 'bottom'
-    })
-  }
+  const [showNotification, contextHolder] = useNotification();
 
   const handleLogin = async (data) => {
     const response = await sendRequest('auth/login', 'post', data);
@@ -28,7 +22,8 @@ export const LoginForm = () => {
       navigate(0);
     }
     else {
-      openNotififcation(response.message)
+      console.log(response);
+      showNotification(response)
     }
   }
   // переименоватьс

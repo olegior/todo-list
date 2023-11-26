@@ -3,7 +3,6 @@ import { getFromLocalStorage } from "./localStorage";
 
 const BASEURL = 'https://todo-redev.herokuapp.com/api/';
 
-// const [token] = getFromLocalStorage('token');
 const token = getFromLocalStorage('token');
 
 export const sendRequest = async (url, method, body) => {

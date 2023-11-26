@@ -1,10 +1,10 @@
-import { UnorderedListOutlined, LogoutOutlined } from '@ant-design/icons';
+import { UnorderedListOutlined, LogoutOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Flex } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
 import { deleteFromLocalStorage } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 
-export const Header = ({ handleLogOpen }) => {
+export const Header = ({ handleLogOpen, showSuccess, setShowSuccess }) => {
     const navigate = useNavigate()
     const logout = () => {
         deleteFromLocalStorage('token');
@@ -12,13 +12,21 @@ export const Header = ({ handleLogOpen }) => {
     }
     return (
         <AntHeader style={{ color: '#FFFFFF' }} >
-            <Flex justify='space-between' style={{ marginTop: '16px' }}>
+            <Flex justify='right' gap={10} style={{ marginTop: '16px' }}>
                 <Button
                     ghost
                     onClick={handleLogOpen}>
                     <UnorderedListOutlined />
                     История
                 </Button>
+
+                <Button
+                    ghost
+                    onClick={() => setShowSuccess(prev => !prev)}>
+                    {showSuccess ? <CheckOutlined /> : <CloseOutlined />}
+                    Уведомления
+                </Button>
+
                 <Button
                     ghost
                     onClick={logout}>
