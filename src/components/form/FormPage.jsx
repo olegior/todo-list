@@ -10,7 +10,7 @@ import { getFromLocalStorage } from '../../utils/localStorage';
 
 export const FormPage = ({ name, fields, buttonTitle, cb, contextHolder, path }) => {
     const [isLogged] = useState(getFromLocalStorage('token'));
-    const { Paragraph } = Typography;
+    const { Title } = Typography;
 
     const formText = {
         login: ['Еще не зарегестрированы? ', 'Зарегистрироваться'],
@@ -25,11 +25,13 @@ export const FormPage = ({ name, fields, buttonTitle, cb, contextHolder, path })
             <Flex
                 justify='center'
                 vertical='vertical'
+                style={{ height: '100dvh', padding: '10px' }}
             >
                 {contextHolder}
                 <TodosCol>
+                    <Title level={2}>{buttonTitle}</Title>
                     {!isLogged ? form : <Navigate to={'/'} />}
-                    <Paragraph>{formText[name][0]} <Link to={path} >{formText[name][1]}</Link></Paragraph>
+                    <Title level={5}>{formText[name][0]} <Link to={path} >{formText[name][1]}</Link></Title>
                 </TodosCol>
             </Flex>
         </>
