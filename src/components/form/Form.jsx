@@ -30,7 +30,6 @@ export const Form = ({ name, fields = [], cb, button }) => {
         const trimmedData = {};
         for (let key in data) {
             trimmedData[key] = data[key].trim();
-            // console.log(trimmedData[key]);
         }
         form.setFieldsValue(trimmedData)
         cb(trimmedData);
@@ -50,9 +49,7 @@ export const Form = ({ name, fields = [], cb, button }) => {
                 const { name, label, placeholder, type, rule = [] } = field;
                 return (
                     <Row key={name}>
-                        <Col span={24}
-                        // sm={{ span: 18 }}
-                        >
+                        <Col span={24}>
                             <AntForm.Item
                                 label={label}
                                 name={name}
@@ -68,9 +65,7 @@ export const Form = ({ name, fields = [], cb, button }) => {
                     </Row>)
             })}
             <Row>
-                <Col span={24}
-                // sm={{ span: 6 }} 
-                >
+                <Col span={24}>
                     <AntForm.Item>
                         {button}
                     </AntForm.Item>

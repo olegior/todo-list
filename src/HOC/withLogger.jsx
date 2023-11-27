@@ -2,7 +2,7 @@ import { getDataAction } from "../utils/api";
 import { getFromLocalStorage, setToLocalStorage } from "../utils/localStorage";
 
 
-//устарело, переделать под api
+// /?
 export const withLogger = (Component) => {
     const createLogString = (action) => {
         const time = new Date().toLocaleString();
@@ -26,7 +26,7 @@ export const withLogger = (Component) => {
             const todo = getTodo(getDataAction(e.target, 'log'));
             setToLocalStorage('log', [...log, {
                 action: createLogString(action),
-                todo: todo.title //consider to api: todo.todo -> todo.title
+                todo: todo.title 
             }])
         }
     }

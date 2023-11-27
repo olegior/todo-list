@@ -8,11 +8,11 @@ import { SubmitButton } from './SubmitButton';
 import { useState } from 'react';
 import { getFromLocalStorage } from '../../utils/localStorage';
 
-export const FormPage = ({ name, fields, buttonTitle, cb, contextHolder, path }) => {
+export const PageForm = ({ name, fields, buttonTitle, cb, contextHolder, path }) => {
     const [isLogged] = useState(getFromLocalStorage('token'));
     const { Title } = Typography;
 
-    const formText = {
+    const formText = { // /?
         login: ['Еще не зарегестрированы? ', 'Зарегистрироваться'],
         register: ['Уже есть аккаунт? ', 'Войти ']
     }

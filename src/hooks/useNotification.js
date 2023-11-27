@@ -4,7 +4,6 @@ export const useNotification = (showSuccess = false, placement = 'bottom') => {
     const [api, contextHolder] = notification.useNotification();
     const fn = (response) => {
         const showNotification = (type, response) => {
-            // console.log(response);
             api[type]({
                 message: response.param,
                 description: response.msg,

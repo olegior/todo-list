@@ -1,6 +1,6 @@
 import { sendRequest } from '../utils/api';
 import { setToLocalStorage } from '../utils/localStorage';
-import { FormPage } from '../components/form/FormPage';
+import { PageForm } from '../components/form/PageForm';
 import { useNavigate } from 'react-router-dom';
 import { useNotification } from '../hooks/useNotification';
 
@@ -26,7 +26,7 @@ export const LoginPage = () => {
 
   return (
     <>
-      <FormPage name={'login'} fields={fields} buttonTitle={'Войти'} cb={handleLogin} contextHolder={contextHolder} path={'/register'} />
+      <PageForm name={'login'} fields={fields} buttonTitle={'Войти'} cb={handleLogin} contextHolder={contextHolder} path={'/register'} />
     </>
   )
 }

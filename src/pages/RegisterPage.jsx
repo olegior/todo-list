@@ -1,7 +1,7 @@
 
 import { sendRequest } from '../utils/api';
 import { useNotification } from '../hooks/useNotification';
-import { FormPage } from '../components/form/FormPage';
+import { PageForm } from '../components/form/PageForm';
 
 
 export const RegisterPage = () => {
@@ -22,7 +22,7 @@ export const RegisterPage = () => {
 
     return (
         <>
-            <FormPage name={'register'} fields={fields} buttonTitle={'Зарегистрироваться'} cb={handleRegister} contextHolder={contextHolder} path={'/login'} />
+            <PageForm name={'register'} fields={fields} buttonTitle={'Зарегистрироваться'} cb={handleRegister} contextHolder={contextHolder} path={'/login'} />
         </>
     )
 }
