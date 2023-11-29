@@ -5,10 +5,10 @@ import { deleteFromLocalStorage } from '../../utils/localStorage';
 import { useNavigate } from 'react-router-dom';
 
 export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
     const logout = () => {
         deleteFromLocalStorage('token');
-        navigate(0);
+        // navigate(0);
     }
 
     const handleMenuClick = (e) => {

@@ -12,12 +12,15 @@ import { Header } from '../components/todos/Header'
 import { useEffect, useState } from 'react'
 
 import { withLogger } from '../HOC/withLogger'
-import { addTodo, getTodos } from '../utils/todos'
 import { useNotification } from '../hooks/useNotification'
+import { useDispatch, useSelector } from 'react-redux'
+import { addTodo } from '../store/actions/todosActions'
+import { setToLocalStorage } from '../utils/localStorage'
+import { v4 } from 'uuid'
+
 
 export const TodosPage = () => {
-    const [todos, setTodos] = useState([]);
-    const [response, setResponse] = useState();
+
     const [showSuccess, setShowSuccess] = useState(true);
     const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
     const [filter, setFilter] = useState(undefined);
@@ -26,14 +29,10 @@ export const TodosPage = () => {
     const LogInput = withLogger(Form);
     const LogList = withLogger(List);
 
-    useEffect(() => {
-        const loadTodos = async () => {
-            const response = await getTodos();
-            // showNotification(response);
-            setTodos(response)
-        }
-        loadTodos();
-    }, [response])
+    const todos = useSelector(store => store.todos);
+
+    const dispatch = useDispatch();
+
 
     const handleLogOpen = () => {
         setIsLogOpen(isLogOpen => !isLogOpen)
@@ -50,12 +49,18 @@ export const TodosPage = () => {
     const handleShow = (e) => {
         console.log();
         showNotification(e);
-        setResponse(e);
+        // setResponse(e);
     }
 
-    const handleAddTodo = async (e) => {
-        handleShow(await addTodo(e.todo));
+    const handleAddTodo = (e) => {
+        dispatch(addTodo({ id: v4(), title: e.todo, isCompleted: false }));
     }
+
+
+    useEffect(() => {
+        setToLocalStorage('todos', todos);
+
+    }, [todos])
 
     const fields = [
         {

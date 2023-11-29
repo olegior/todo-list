@@ -6,7 +6,7 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 // eslint-disable-next-line react/prop-types
 export const ListItem = ({ todo, handleEditTodo }) => {
     const { Paragraph } = Typography;
-    const { id, title: text, isCompleted: completed } = todo;
+    const { id, title, isCompleted } = todo;
     return (
         <Row
             data-log={JSON.stringify(todo)}
@@ -15,7 +15,7 @@ export const ListItem = ({ todo, handleEditTodo }) => {
             align='middle'>
             <Col span={1}>
                 <TodosButton Component={Checkbox}
-                    checked={completed} action={completed ? 'Активна' : 'Выполнена'}
+                    checked={isCompleted} action={isCompleted ? 'Активна' : 'Выполнена'}
                     type={'check'}
                     id={id}
                 />
@@ -23,17 +23,18 @@ export const ListItem = ({ todo, handleEditTodo }) => {
             <Col span={20} offset={1}>
                 <Paragraph
                     editable={{
+                        // onChange: (v) => { handleEditTodo(id, v) },
                         onChange: (v) => { handleEditTodo(id, v) },
                         icon: <TodosButton Component={EditOutlined} action='Изменена' />
                     }}
 
-                    delete={completed}
+                    delete={isCompleted}
                     style={{
                         fontSize: '16px',
-                        color: completed ? 'gray' : 'black',
+                        color: isCompleted ? 'gray' : 'black',
                         textAlign: 'left',
                     }}
-                >{text}
+                >{title}
                 </Paragraph>
             </Col>
             <Col span={1} offset={1}>
