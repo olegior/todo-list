@@ -2,13 +2,10 @@ import { UnorderedListOutlined, LogoutOutlined, CheckOutlined, CloseOutlined, Me
 import { Flex, Menu } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
 import { deleteFromLocalStorage } from '../../utils/localStorage';
-import { useNavigate } from 'react-router-dom';
 
 export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
-    // const navigate = useNavigate();
     const logout = () => {
         deleteFromLocalStorage('token');
-        // navigate(0);
     }
 
     const handleMenuClick = (e) => {

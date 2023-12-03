@@ -1,10 +1,10 @@
 
 import { Link, Navigate, } from 'react-router-dom';
 import { Flex, Typography } from 'antd';
-import { TodosButton } from '../todos/TodosButton';
-import { Form } from './Form';
-import { TodosCol } from '../todos/TodosCol';
-import { SubmitButton } from './SubmitButton';
+import { TodosButton } from '../../components/todos/TodosButton';
+import { Form } from '../../components/form/Form';
+import { TodosCol } from '../../components/todos/TodosCol';
+import { SubmitButton } from '../../components/form/SubmitButton';
 import { useState } from 'react';
 import { getFromLocalStorage } from '../../utils/localStorage';
 

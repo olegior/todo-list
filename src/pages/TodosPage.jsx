@@ -9,58 +9,56 @@ import { SubmitButton } from '../components/form/SubmitButton'
 import { Form } from '../components/form/Form'
 import { Header } from '../components/todos/Header'
 
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 import { withLogger } from '../HOC/withLogger'
 import { useNotification } from '../hooks/useNotification'
 import { useDispatch, useSelector } from 'react-redux'
-import { addTodo } from '../store/actions/todosActions'
-import { setToLocalStorage } from '../utils/localStorage'
+import { addTodo } from '../store/todos/todosActions'
 import { v4 } from 'uuid'
+import { selectTodos } from '../store/todos/todosSelector'
+import { setToLocalStorage } from '../utils/localStorage'
+import { toggleNotification } from '../store/notifications/notificationsActions'
+import { toggleFilter } from '../store/filter/filterActions'
+import { showLog } from '../store/log/logActions'
 
 
 export const TodosPage = () => {
 
-    const [showSuccess, setShowSuccess] = useState(true);
-    const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
-    const [filter, setFilter] = useState(undefined);
-    const [isLogOpen, setIsLogOpen] = useState(false);
-
     const LogInput = withLogger(Form);
     const LogList = withLogger(List);
 
-    const todos = useSelector(store => store.todos);
-
     const dispatch = useDispatch();
 
+    const showSuccess = useSelector(store => store.sNotifications);
+    const filter = useSelector(store => store.filter);
+    const todos = useSelector(store => selectTodos(store.todos, filter));
+    const isLogOpened = useSelector(store => store.showLog);
+
+    const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
 
     const handleLogOpen = () => {
-        setIsLogOpen(isLogOpen => !isLogOpen)
+        dispatch(showLog);
     }
 
     const hanldeFilter = (value) => {
-        setFilter(value)
+        dispatch(toggleFilter(value))
     }
 
     const handleSuccess = () => {
-        setShowSuccess(prev => !prev);
+        dispatch(toggleNotification)
     }
 
     const handleShow = (e) => {
-        console.log();
         showNotification(e);
-        // setResponse(e);
     }
 
     const handleAddTodo = (e) => {
+        showNotification({ title: e.todo })
         dispatch(addTodo({ id: v4(), title: e.todo, isCompleted: false }));
     }
 
-
-    useEffect(() => {
-        setToLocalStorage('todos', todos);
-
-    }, [todos])
+    useEffect(() => setToLocalStorage('todos', todos), [todos])
 
     const fields = [
         {
@@ -74,7 +72,7 @@ export const TodosPage = () => {
 
     return (
         <>
-            <LogDrawer open={isLogOpen} handleOpen={handleLogOpen} />
+            <LogDrawer open={isLogOpened} handleOpen={handleLogOpen} />
             {contextHolder}
             <Layout className='layout'>
                 <Header handleLogOpen={handleLogOpen} showSuccess={showSuccess} handleSuccess={handleSuccess} />

@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "../constants";
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "./todosConstants";
 
 export const todosReducer = (state = [], action) => {
     switch (action.type) {
@@ -12,7 +12,7 @@ export const todosReducer = (state = [], action) => {
             return state.map(e => e.id === action.payload ? { ...e, isCompleted: !e.isCompleted } : e);
         }
         case EDIT_TODO: {
-            return state.map(e => e.id === action.payload.id ? { ...e, title: action.payload.title } : e)
+            return state.map(e => e.id === action.payload.id ? { ...e, title: action.payload.title } : e);
         }
         default: {
             return state;

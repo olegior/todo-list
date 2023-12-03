@@ -1,7 +1,4 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "../constants";
-
-// export const actionCreator = (type) => (payload) => ({ type, payload });
-
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "./todosConstants";
 
 export const addTodo = (payload) => ({ type: ADD_TODO, payload });
 

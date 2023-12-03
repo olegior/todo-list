@@ -4,7 +4,7 @@ import { getFromLocalStorage } from "../../utils/localStorage";
 
 // eslint-disable-next-line react/prop-types
 export const LogDrawer = ({ open, handleOpen }) => {
-    const log = Array.isArray(getFromLocalStorage('log')) ? getFromLocalStorage('log') : [];
+    const log = getFromLocalStorage('log') || [];
     return (
         <Drawer open={open} onClose={handleOpen}>
             <List dataSource={log}

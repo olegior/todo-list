@@ -23,7 +23,6 @@ export const ListItem = ({ todo, handleEditTodo }) => {
             <Col span={20} offset={1}>
                 <Paragraph
                     editable={{
-                        // onChange: (v) => { handleEditTodo(id, v) },
                         onChange: (v) => { handleEditTodo(id, v) },
                         icon: <TodosButton Component={EditOutlined} action='Изменена' />
                     }}

@@ -1,8 +1,8 @@
-import { sendRequest } from '../utils/api';
-import { setToLocalStorage } from '../utils/localStorage';
+import { sendRequest } from '../../utils/api';
+import { setToLocalStorage } from '../../utils/localStorage';
 import { PageForm } from '../components/form/PageForm';
 import { useNavigate } from 'react-router-dom';
-import { useNotification } from '../hooks/useNotification';
+import { useNotification } from '../../hooks/useNotification';
 
 export const LoginPage = () => {
   const navigate = useNavigate();
