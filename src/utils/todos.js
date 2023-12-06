@@ -1,8 +1,6 @@
 import { sendRequest } from "./api"
-import { getFromLocalStorage } from "./localStorage";
 
 const URL = 'todos';
-const token = getFromLocalStorage('token');
 
 export const getTodos = async () => {
     return await sendRequest(URL, 'get');
@@ -21,7 +19,7 @@ export const toggleTodo = async (id) => {
 }
 
 export const editTodo = async (id, newTodo) => {
-    return await sendRequest(`${URL}/${id}`, 'patch', { title: newTodo }, token)
+    return await sendRequest(`${URL}/${id}`, 'patch', { title: newTodo })
 }
 
 // filters

@@ -4,10 +4,13 @@ import { getFromLocalStorage } from "./localStorage";
 const BASEURL = 'https://todo-redev.herokuapp.com/api/';
 const token = getFromLocalStorage('token');
 
+axios.interceptors.request.use((config) => {
+    config.headers.Authorization = `Bearer ${token}`;
+    return config;
+})
+
 export const sendRequest = async (url, method, body) => {
     try {
-        if (token)
-            axios.defaults.headers.common.Authorization = `Bearer ${token}`;
         const response = await axios[method](BASEURL + url, body);
         return response.data;
     }
