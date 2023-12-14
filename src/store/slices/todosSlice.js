@@ -12,7 +12,7 @@ const todos = createSlice({
     selectors: {
         selectTodos: (state, filter) => {
             switch (filter) {
-                case 'all': return state;
+                case '': return state;
                 case false: return state.filter(e => !e.isCompleted);
                 case true: return state.filter(e => e.isCompleted);
                 default: return state;
