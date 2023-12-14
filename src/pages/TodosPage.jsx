@@ -30,6 +30,7 @@ export const TodosPage = () => {
     const showSuccess = useSelector(store => store.sNotifications);
     const filter = useSelector(store => store.filter);
     const todos = useSelector(store => selectTodos(store, filter));
+    const allTodos = useSelector(store => store.todos);
     const isLogOpened = useSelector(store => store.showLog);
 
     const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
@@ -47,7 +48,7 @@ export const TodosPage = () => {
         dispatch(addTodo({ id: v4(), title: e.todo, isCompleted: false }));
     }
 
-    useEffect(() => setToLocalStorage('todos', todos), [todos])
+    useEffect(() => setToLocalStorage('todos', allTodos), [todos])
 
     const fields = [
         {
