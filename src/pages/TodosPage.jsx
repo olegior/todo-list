@@ -1,3 +1,6 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import { Content } from 'antd/es/layout/layout'
 import { Layout, Row, } from 'antd'
 
@@ -9,19 +12,13 @@ import { SubmitButton } from '../components/form/SubmitButton'
 import { Form } from '../components/form/Form'
 import { Header } from '../components/todos/Header'
 
-import { useEffect } from 'react'
-
 import { withLogger } from '../HOC/withLogger'
 import { useNotification } from '../hooks/useNotification'
-import { useDispatch, useSelector } from 'react-redux'
-import { addTodo } from '../store/todos/todosActions'
 import { v4 } from 'uuid'
-import { selectTodos } from '../store/todos/todosSelector'
 import { setToLocalStorage } from '../utils/localStorage'
-import { toggleNotification } from '../store/notifications/notificationsActions'
-import { toggleFilter } from '../store/filter/filterActions'
-import { showLog } from '../store/log/logActions'
-
+import { addTodo, selectTodos } from '../store/slices/todosSlice'
+import { toggleNotification } from '../store/slices/notificationSlice'
+import { toggleLog } from '../store/slices/logSlice'
 
 export const TodosPage = () => {
 
@@ -32,25 +29,17 @@ export const TodosPage = () => {
 
     const showSuccess = useSelector(store => store.sNotifications);
     const filter = useSelector(store => store.filter);
-    const todos = useSelector(store => selectTodos(store.todos, filter));
+    const todos = useSelector(store => selectTodos(store, filter));
     const isLogOpened = useSelector(store => store.showLog);
 
     const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
 
     const handleLogOpen = () => {
-        dispatch(showLog);
-    }
-
-    const hanldeFilter = (value) => {
-        dispatch(toggleFilter(value))
+        dispatch(toggleLog());
     }
 
     const handleSuccess = () => {
-        dispatch(toggleNotification)
-    }
-
-    const handleShow = (e) => {
-        showNotification(e);
+        dispatch(toggleNotification())
     }
 
     const handleAddTodo = (e) => {
@@ -85,7 +74,7 @@ export const TodosPage = () => {
                         </Row>
                         <Row>
                             <TodosCol>
-                                <LogList controlTodos={[todos, handleShow]} hanldeFilter={hanldeFilter} filter={filter} />
+                                <LogList todos={todos} showNotification={showNotification} />
                             </TodosCol>
                         </Row>
                     </Content>

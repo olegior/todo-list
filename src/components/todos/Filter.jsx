@@ -1,8 +1,19 @@
 import { Radio, } from 'antd'
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleFilter } from '../../store/slices/filterSlice';
 
 // eslint-disable-next-line react/prop-types
-export const Filter = ({ hanldeFilter, options = [] }) => {
-    const [filter, setFilter] = hanldeFilter;
+export const Filter = () => {
+
+    const filter = useSelector(state => state.filter);
+    const dispatch = useDispatch();
+
+    const options = [
+        { label: 'все', value: '' },
+        { label: 'выполненые', value: true },
+        { label: 'активные', value: false },
+    ];
+
 
     return (
         <Radio.Group
@@ -11,7 +22,7 @@ export const Filter = ({ hanldeFilter, options = [] }) => {
             optionType="button"
             buttonStyle="outline"
             size='large'
-            onChange={(e) => setFilter(e.target.value)}
+            onChange={(e) => dispatch(toggleFilter(e.target.value))}
         >
         </Radio.Group>
     )

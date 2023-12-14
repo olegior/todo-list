@@ -1,1 +1,0 @@
-export const SHOW_LOG = 'SHOW_LOG';

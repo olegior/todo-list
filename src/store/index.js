@@ -1,14 +1,22 @@
-import { createStore } from "redux";
-import { rootReducer } from "./rootReducer";
-import { composeWithDevTools } from "redux-devtools-extension";
 import { getFromLocalStorage } from "../utils/localStorage";
+import { configureStore } from "@reduxjs/toolkit";
+import { todosReducer, } from "./slices/todosSlice";
+import { toggleSMessages } from "./slices/notificationSlice";
+import { showLogReducer } from "./slices/logSlice";
+import { filterReducer } from "./slices/filterSlice";
 
 const initialValue = {
     todos: getFromLocalStorage('todos') || undefined,
 }
 
-export const store = createStore(rootReducer, initialValue,
-    // window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    composeWithDevTools()
-);
+export const store = configureStore({
+    reducer: {
+        todos: todosReducer,
+        sNotifications: toggleSMessages,
+        showLog: showLogReducer,
+        filter: filterReducer
+    },
+    preloadedState: initialValue,
+    devTools: process.env.NODE_ENV === 'development'
+})
 

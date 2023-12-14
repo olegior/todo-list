@@ -28,11 +28,11 @@ export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
             key: 'notification',
             icon: showSuccess ? <CheckOutlined /> : <CloseOutlined />,
         },
-        {
-            label: 'Выйти',
-            key: 'logout',
-            icon: <LogoutOutlined />,
-        },
+        // {
+        //     label: 'Выйти',
+        //     key: 'logout',
+        //     icon: <LogoutOutlined />,
+        // },
     ]
 
     return (
