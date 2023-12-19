@@ -1,22 +1,21 @@
 
 import { Link, Navigate, } from 'react-router-dom';
 import { Flex, Typography } from 'antd';
-import { TodosButton } from '../../components/todos/TodosButton';
-import { Form } from '../../components/form/Form';
-import { TodosCol } from '../../components/todos/TodosCol';
-import { SubmitButton } from '../../components/form/SubmitButton';
-import { useState } from 'react';
-import { getFromLocalStorage } from '../../utils/localStorage';
+import { TodosButton } from '../todos/TodosButton';
+import { Form } from './Form';
+import { TodosCol } from '../todos/TodosCol';
+import { SubmitButton } from './SubmitButton';
+import { useSelector } from 'react-redux';
 
 export const PageForm = ({ name, fields, buttonTitle, cb, contextHolder, path }) => {
-    const [isLogged] = useState(getFromLocalStorage('token'));
+    const token = useSelector(store => store.token);
     const { Title } = Typography;
 
     const formText = { // /?
         login: ['Еще не зарегестрированы? ', 'Зарегистрироваться'],
         register: ['Уже есть аккаунт? ', 'Войти ']
     }
-
+    
     const button = <TodosButton Component={SubmitButton} title={buttonTitle} />;
     const form = <Form name={name} fields={fields} button={button} cb={cb} />
 
@@ -30,7 +29,7 @@ export const PageForm = ({ name, fields, buttonTitle, cb, contextHolder, path })
                 {contextHolder}
                 <TodosCol>
                     <Title level={2}>{buttonTitle}</Title>
-                    {!isLogged ? form : <Navigate to={'/'} />}
+                    {!token ? form : <Navigate to={'/'} />}
                     <Title level={5}>{formText[name][0]} <Link to={path} >{formText[name][1]}</Link></Title>
                 </TodosCol>
             </Flex>

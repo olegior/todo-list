@@ -10,4 +10,4 @@ const showLog = createSlice({
 })
 
 export const { toggleLog } = showLog.actions;
-export const { reducer: showLogReducer } = showLog;
+export const showLogReducer = showLog.reducer;

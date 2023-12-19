@@ -1,15 +1,17 @@
 
-import { sendRequest } from '../utils/api';
 import { useNotification } from '../hooks/useNotification';
 import { PageForm } from '../components/form/PageForm';
+import { userRegister } from '../store/slices/tokenSlice';
+import { useDispatch } from 'react-redux';
 
 
 export const RegisterPage = () => {
-
+    const dispatch = useDispatch()
     const [showNotification, contextHolder] = useNotification(true);
 
     const handleRegister = async (data) => {
-        showNotification(await sendRequest('users/register', 'post', data));
+        dispatch(userRegister(data))
+            .then(data => showNotification(data.payload))
     }
 
     const fields = [

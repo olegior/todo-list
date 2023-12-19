@@ -1,11 +1,16 @@
 import { UnorderedListOutlined, LogoutOutlined, CheckOutlined, CloseOutlined, MenuFoldOutlined } from '@ant-design/icons';
 import { Flex, Menu } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
-import { deleteFromLocalStorage } from '../../utils/localStorage';
+import { deleteToken } from '../../store/slices/tokenSlice';
+import { useDispatch } from 'react-redux';
+import { memo } from 'react';
 
-export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
+// eslint-disable-next-line react/display-name
+export const Header = memo(({ handleLogOpen, showSuccess, handleSuccess }) => {
+    console.log('header')
+    const dispatch = useDispatch();
     const logout = () => {
-        deleteFromLocalStorage('token');
+        dispatch(deleteToken());
     }
 
     const handleMenuClick = (e) => {
@@ -24,19 +29,19 @@ export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
             icon: <UnorderedListOutlined />,
         },
         {
-            label: `Успешные уведомления`,
+            label: `Уведомлять об успехе`,
             key: 'notification',
             icon: showSuccess ? <CheckOutlined /> : <CloseOutlined />,
         },
-        // {
-        //     label: 'Выйти',
-        //     key: 'logout',
-        //     icon: <LogoutOutlined />,
-        // },
+        {
+            label: 'Выйти',
+            key: 'logout',
+            icon: <LogoutOutlined />,
+        },
     ]
 
     return (
-        <AntHeader style={{ color: '#FFFFFF' }} >
+        <AntHeader style={{ color: '#FFFFFF', padding: '0px' }} >
             <Flex justify='flex-end'>
                 <Menu
                     mode="horizontal"
@@ -49,4 +54,4 @@ export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
             </Flex>
         </AntHeader>
     )
-}
+})

@@ -1,10 +1,10 @@
 import { Drawer, List } from "antd"
 import Paragraph from "antd/lib/typography/";
-import { getFromLocalStorage } from "../../utils/localStorage";
+import { useSelector } from "react-redux";
 
 // eslint-disable-next-line react/prop-types
 export const LogDrawer = ({ open, handleOpen }) => {
-    const log = getFromLocalStorage('log') || [];
+    const log = useSelector(state => state.log)
     return (
         <Drawer open={open} onClose={handleOpen}>
             <List dataSource={log}

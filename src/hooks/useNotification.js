@@ -14,7 +14,7 @@ export const useNotification = (showSuccess = false, placement = 'bottom') => {
         response.message && showNotification('error', { msg: response.message });
 
         if (!response.hasOwnProperty('success') && !response.hasOwnProperty('message') && showSuccess) {
-            showNotification('success', { msg: `Успешно: ${response?.title}` })
+            showNotification('success', { msg: `Успешно: ${response?.title || ''}` })
         }
     }
 

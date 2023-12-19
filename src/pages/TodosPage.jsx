@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Content } from 'antd/es/layout/layout'
-import { Layout, Row, } from 'antd'
+import { Layout, Row, Spin, } from 'antd'
 
 import { List } from '../components/todos/List'
 import { LogDrawer } from '../components/todos/LogDrawer'
@@ -14,13 +14,28 @@ import { Header } from '../components/todos/Header'
 
 import { withLogger } from '../HOC/withLogger'
 import { useNotification } from '../hooks/useNotification'
-import { v4 } from 'uuid'
-import { setToLocalStorage } from '../utils/localStorage'
-import { addTodo, selectTodos } from '../store/slices/todosSlice'
+
+import {
+    // selectTodos,
+    getTodosThunk,
+    addTodoThunk,
+} from '../store/slices/todosSlice'
 import { toggleNotification } from '../store/slices/notificationSlice'
-import { toggleLog } from '../store/slices/logSlice'
+import { toggleLog } from '../store/slices/showLogSlice'
+import { ax } from '../utils/api'
 
 export const TodosPage = () => {
+
+    const selectTodos = (todos, filter) => {
+        if (todos) {
+            switch (filter) {
+                case 'all': return todos;
+                case 'active': return todos.filter(e => !e.isCompleted);
+                case 'completed': return todos.filter(e => e.isCompleted);
+                default: return todos;
+            }
+        }
+    }
 
     const LogInput = withLogger(Form);
     const LogList = withLogger(List);
@@ -29,9 +44,11 @@ export const TodosPage = () => {
 
     const showSuccess = useSelector(store => store.sNotifications);
     const filter = useSelector(store => store.filter);
-    const todos = useSelector(store => selectTodos(store, filter));
-    const allTodos = useSelector(store => store.todos);
+    const todos = useSelector(store => selectTodos(store.todos.entities, filter));
+    const todo = useSelector(store => store.todos);
+    const loading = useSelector(store => store.todos.loading);
     const isLogOpened = useSelector(store => store.showLog);
+    const token = useSelector(store => store.token);
 
     const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
 
@@ -45,10 +62,17 @@ export const TodosPage = () => {
 
     const handleAddTodo = (e) => {
         showNotification({ title: e.todo })
-        dispatch(addTodo({ id: v4(), title: e.todo, isCompleted: false }));
+        dispatch(addTodoThunk(e.todo))
     }
 
-    useEffect(() => setToLocalStorage('todos', allTodos), [todos])
+    useEffect(() => {
+        dispatch(getTodosThunk());
+    }, []);
+
+    ax.interceptors.request.use((config) => {
+        config.headers.Authorization = `Bearer ${token}`;
+        return config;
+    }, (err) => console.log(err))
 
     const fields = [
         {
@@ -75,7 +99,18 @@ export const TodosPage = () => {
                         </Row>
                         <Row>
                             <TodosCol>
-                                <LogList todos={todos} showNotification={showNotification} />
+
+                                {
+                                    loading === 'loading'
+                                        ?
+                                        <>
+                                            <Spin tip="Загрузка дел..." size="large">
+                                                <div className="content" style={{ padding: '50px' }} />
+                                            </Spin>
+                                        </>
+                                        :
+                                        < LogList todos={todos} showNotification={showNotification} />}
+                                {todo.loading === 'failed' && <span style={{ color: 'red' }}>{todo.error}</span>}
                             </TodosCol>
                         </Row>
                     </Content>

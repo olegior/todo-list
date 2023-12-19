@@ -2,27 +2,28 @@ import { List as AntList } from "antd";
 import { ListItem } from "./ListItem";
 import { Filter } from "./Filter";
 import { getDataAction } from "../../utils/api";
-import { useDispatch } from "react-redux";
-import { deleteTodo, editTodo, toggleTodo } from "../../store/slices/todosSlice";
-export const List = ({ todos, showNotification }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { deleteTodoThunk, editTodoThunk, toggleTodoThunk } from "../../store/slices/todosSlice";
+export const List = ({ todos = [], showNotification }) => {
 
     const dispatch = useDispatch();
-
     const handleEditTodo = (id, title) => {
         if (title) {
-            dispatch(editTodo({ id, title }));
             showNotification({ title })
+            dispatch(editTodoThunk({ id, title }));
         }
     }
 
+
     const handleTodos = (e) => {
         const handlers = {
-            check: toggleTodo,
-            delete: deleteTodo,
+            check: toggleTodoThunk,
+            delete: deleteTodoThunk,
         }
         const type = getDataAction(e.target, 'type');
+
         if (type) {
-            const id = getDataAction(e.target, 'id');
+            const id = +getDataAction(e.target, 'id');
             showNotification(todos.find(e => e.id === id));
             dispatch(handlers[type](id));
         }
@@ -39,7 +40,13 @@ export const List = ({ todos, showNotification }) => {
                 header={<Filter />}
                 bordered
                 dataSource={todos}
-                pagination={{ align: 'center', hideOnSinglePage: true, }}
+                pagination={
+                    {
+                        align: 'center', hideOnSinglePage: true,
+
+                        // current: page
+                    }
+                }
                 renderItem={(todo) =>
                     <AntList.Item style={{ borderWidth: '2px', }}>
                         <ListItem todo={todo} handleEditTodo={handleEditTodo} />

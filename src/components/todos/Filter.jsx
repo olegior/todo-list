@@ -1,4 +1,4 @@
-import { Radio, } from 'antd'
+import { Radio } from 'antd'
 import { useDispatch, useSelector } from 'react-redux';
 import { toggleFilter } from '../../store/slices/filterSlice';
 
@@ -9,9 +9,9 @@ export const Filter = () => {
     const dispatch = useDispatch();
 
     const options = [
-        { label: 'все', value: '' },
-        { label: 'выполненые', value: true },
-        { label: 'активные', value: false },
+        { label: 'все', value: 'all' },
+        { label: 'выполненые', value: 'completed' },
+        { label: 'активные', value: 'active' },
     ];
 
 

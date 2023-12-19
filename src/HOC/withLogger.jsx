@@ -1,22 +1,24 @@
+import { useDispatch } from "react-redux";
 import { getDataAction } from "../utils/api";
-import { getFromLocalStorage, setToLocalStorage } from "../utils/localStorage";
-
+import { saveToLog } from "../store/slices/loggerSlice";
 
 // /?
 export const withLogger = (Component) => {
+    const dispatch = useDispatch();
+
     const createLogString = (action) => {
         const time = new Date().toLocaleString();
         return `${time}: ${action} запись: `;
     }
 
-    const log = getFromLocalStorage('log') || [];
+    // const log = getFromLocalStorage('log') || [];
 
     const getTodo = (json) => {
-        try{
+        try {
             return JSON.parse(json);
         }
-        catch(err){
-            return {todo:null}
+        catch (err) {
+            return { todo: null }
         }
     }
 
@@ -24,10 +26,10 @@ export const withLogger = (Component) => {
         const action = getDataAction(e.target, 'action');
         if (action) {
             const todo = getTodo(getDataAction(e.target, 'log'));
-            setToLocalStorage('log', [...log, {
+            dispatch(saveToLog({
                 action: createLogString(action),
-                todo: todo.title 
-            }])
+                todo: todo.title
+            }));
         }
     }
     // eslint-disable-next-line react/display-name
