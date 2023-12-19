@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getFromLocalStorage } from "../../utils/localStorage"
+
 
 const filter = createSlice({
     name: 'filter',
-    initialState: getFromLocalStorage('filter'),
+    initialState: 'all',
     reducers: {
-        toggleFilter: (state, action) => { state = action.payload }
+        toggleFilter: (state, action) => action.payload
     }
 })
 

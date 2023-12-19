@@ -4,18 +4,18 @@ import App from './App.jsx';
 import './index.css';
 
 import {
-  // persistor,
+  persistor,
   store
 } from './store';
 import { Provider } from 'react-redux';
-// import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      {/* <PersistGate loading={<h1>loading...</h1>} persistor={persistor}> */}
-      <App />
-      {/* </PersistGate> */}
+      <PersistGate loading={<h1>loading...</h1>} persistor={persistor}>
+        <App />
+      </PersistGate>
     </Provider>
   </React.StrictMode>
 )
