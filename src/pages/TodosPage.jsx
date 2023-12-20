@@ -16,7 +16,7 @@ import { withLogger } from '../HOC/withLogger'
 import { useNotification } from '../hooks/useNotification'
 
 import {
-    // selectTodos,
+    selectTodos,
     getTodosThunk,
     addTodoThunk,
 } from '../store/slices/todosSlice'
@@ -26,29 +26,18 @@ import { ax } from '../utils/api'
 
 export const TodosPage = () => {
 
-    const selectTodos = (todos, filter) => {
-        if (todos) {
-            switch (filter) {
-                case 'all': return todos;
-                case 'active': return todos.filter(e => !e.isCompleted);
-                case 'completed': return todos.filter(e => e.isCompleted);
-                default: return todos;
-            }
-        }
-    }
-
-    const LogInput = withLogger(Form);
-    const LogList = withLogger(List);
-
     const dispatch = useDispatch();
 
     const showSuccess = useSelector(store => store.sNotifications);
     const filter = useSelector(store => store.filter);
-    const todos = useSelector(store => selectTodos(store.todos.entities, filter));
     const todo = useSelector(store => store.todos);
     const loading = useSelector(store => store.todos.loading);
     const isLogOpened = useSelector(store => store.showLog);
     const token = useSelector(store => store.token);
+    const todos = useSelector(store => selectTodos(store.todos.entities, filter));
+
+    const LogInput = withLogger(Form);
+    const LogList = withLogger(List);
 
     const [showNotification, contextHolder] = useNotification(showSuccess, 'bottomRight');
 

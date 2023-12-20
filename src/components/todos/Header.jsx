@@ -3,11 +3,9 @@ import { Flex, Menu } from 'antd';
 import { Header as AntHeader } from 'antd/es/layout/layout';
 import { deleteToken } from '../../store/slices/tokenSlice';
 import { useDispatch } from 'react-redux';
-import { memo } from 'react';
 
 // eslint-disable-next-line react/display-name
-export const Header = memo(({ handleLogOpen, showSuccess, handleSuccess }) => {
-    console.log('header')
+export const Header = ({ handleLogOpen, showSuccess, handleSuccess }) => {
     const dispatch = useDispatch();
     const logout = () => {
         dispatch(deleteToken());
@@ -54,4 +52,4 @@ export const Header = memo(({ handleLogOpen, showSuccess, handleSuccess }) => {
             </Flex>
         </AntHeader>
     )
-})
+}

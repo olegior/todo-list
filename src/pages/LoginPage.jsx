@@ -9,7 +9,7 @@ export const LoginPage = () => {
 
   const handleLogin = async (data) => {
     dispatch(userLogin(data))
-      .unwrap().catch(showNotification);
+      .unwrap().then(showNotification).catch(showNotification);
   }
 
   const fields = [

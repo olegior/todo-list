@@ -1,11 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { sendRequest } from "../../utils/api";
+import { getFromLocalStorage, saveToLocalStorage, deleteFromLocalStorage } from "../../utils/localStorage";
 
 export const userLogin = createAsyncThunk(
     'api/user-login',
     async (data, { dispatch }) => {
-        const response = await sendRequest('auth/login', 'post', data)
-        dispatch(saveToken(response.token));
+        const response = await sendRequest('auth/login', 'post', data);
+        if (response.token)
+            dispatch(saveToken(response.token));
+        return response;
     }
 )
 
@@ -15,11 +18,16 @@ export const userRegister = createAsyncThunk(
 )
 
 const token = createSlice({
-    name: 'toekn',
-    initialState: null,
+    name: 'token',
+    initialState: getFromLocalStorage('token'),
     reducers: {
-        saveToken: (store, action) => action.payload,
-        deleteToken: () => null
+        saveToken: (state, action) => {
+            saveToLocalStorage('token', action.payload)
+        },
+        deleteToken: () => {
+            deleteFromLocalStorage('token');
+            return null;
+        }
     },
     extraReducers: builder => {
         builder
@@ -28,6 +36,10 @@ const token = createSlice({
             })
             .addCase(userRegister.fulfilled, (state, action) => {
                 state = action.payload
+            })
+            .addCase(userLogin.fulfilled, (state, action) => {
+                if (action.payload.token)
+                    return action.payload.token
             })
     }
 })
