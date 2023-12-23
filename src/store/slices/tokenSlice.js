@@ -15,7 +15,7 @@ export const userRegister = createAsyncThunk(
 )
 
 const token = createSlice({
-    name: 'toekn',
+    name: 'token',
     initialState: null,
     reducers: {
         saveToken: (store, action) => action.payload,
