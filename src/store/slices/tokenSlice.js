@@ -6,6 +6,7 @@ export const userLogin = createAsyncThunk(
     async (data, { dispatch }) => {
         const response = await sendRequest('auth/login', 'post', data)
         dispatch(saveToken(response.token));
+        return response;
     }
 )
 
