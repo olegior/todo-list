@@ -3,14 +3,13 @@ import { ListItem } from "./ListItem";
 import { Filter } from "./Filter";
 import { getDataAction } from "../../utils/api";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteTodoThunk, editTodoThunk, toggleTodoThunk } from "../../store/slices/todosSlice";
+import { deleteTodoThunk, editTodoThunk, toggleTodoThunk, } from "../../store/slices/todosSlice";
 export const List = ({ todos = [], showNotification }) => {
 
     const dispatch = useDispatch();
     const handleEditTodo = (id, title) => {
         if (title) {
-            showNotification({ title })
-            dispatch(editTodoThunk({ id, title }));
+            dispatch(editTodoThunk({ id, title })).unwrap().then(showNotification)
         }
     }
 
@@ -24,8 +23,9 @@ export const List = ({ todos = [], showNotification }) => {
 
         if (type) {
             const id = +getDataAction(e.target, 'id');
-            showNotification(todos.find(e => e.id === id));
-            dispatch(handlers[type](id));
+            dispatch(handlers[type](id)).unwrap().then(data => {
+                showNotification(data[0] || data);
+            });
         }
     }
 

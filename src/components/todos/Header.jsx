@@ -7,7 +7,6 @@ import { memo } from 'react';
 
 // eslint-disable-next-line react/display-name
 export const Header = memo(({ handleLogOpen, showSuccess, handleSuccess }) => {
-    console.log('header')
     const dispatch = useDispatch();
     const logout = () => {
         dispatch(deleteToken());

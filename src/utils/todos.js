@@ -18,6 +18,6 @@ export const toggleTodo = async (id) => {
     return await sendRequest(`${URL}/${id}/isCompleted`, 'patch')
 }
 
-export const editTodo = async (id, newTodo) => {
-    return await sendRequest(`${URL}/${id}`, 'patch', { title: newTodo })
+export const editTodo = async ({ id, title }) => {
+    return await sendRequest(`${URL}/${id}`, 'patch', { title })
 }

@@ -16,7 +16,7 @@ import { withLogger } from '../HOC/withLogger'
 import { useNotification } from '../hooks/useNotification'
 
 import {
-    // selectTodos,
+    selectTodos,
     getTodosThunk,
     addTodoThunk,
 } from '../store/slices/todosSlice'
@@ -26,16 +26,6 @@ import { ax } from '../utils/api'
 
 export const TodosPage = () => {
 
-    const selectTodos = (todos, filter) => {
-        if (todos) {
-            switch (filter) {
-                case 'all': return todos;
-                case 'active': return todos.filter(e => !e.isCompleted);
-                case 'completed': return todos.filter(e => e.isCompleted);
-                default: return todos;
-            }
-        }
-    }
 
     const LogInput = withLogger(Form);
     const LogList = withLogger(List);
@@ -44,9 +34,12 @@ export const TodosPage = () => {
 
     const showSuccess = useSelector(store => store.sNotifications);
     const filter = useSelector(store => store.filter);
-    const todos = useSelector(store => selectTodos(store.todos.entities, filter));
+
     const todo = useSelector(store => store.todos);
-    const loading = useSelector(store => store.todos.loading);
+
+    const todos = selectTodos(todo.entities, filter)
+    const loading = todo.loading
+
     const isLogOpened = useSelector(store => store.showLog);
     const token = useSelector(store => store.token);
 
@@ -61,18 +54,19 @@ export const TodosPage = () => {
     }
 
     const handleAddTodo = (e) => {
-        showNotification({ title: e.todo })
         dispatch(addTodoThunk(e.todo))
+            .unwrap().then(showNotification)
     }
-
-    useEffect(() => {
-        dispatch(getTodosThunk());
-    }, []);
 
     ax.interceptors.request.use((config) => {
         config.headers.Authorization = `Bearer ${token}`;
         return config;
     }, (err) => console.log(err))
+
+    useEffect(() => {
+        dispatch(getTodosThunk())
+        // .unwrap().then(showNotification)
+    }, []);
 
     const fields = [
         {
@@ -99,18 +93,14 @@ export const TodosPage = () => {
                         </Row>
                         <Row>
                             <TodosCol>
-
-                                {
-                                    loading === 'loading'
-                                        ?
-                                        <>
-                                            <Spin tip="Загрузка дел..." size="large">
-                                                <div className="content" style={{ padding: '50px' }} />
-                                            </Spin>
-                                        </>
-                                        :
-                                        < LogList todos={todos} showNotification={showNotification} />}
-                                {todo.loading === 'failed' && <span style={{ color: 'red' }}>{todo.error}</span>}
+                                {loading === 'loading'
+                                    ? <>
+                                        <Spin tip="Загрузка дел..." size="large">
+                                            <div className="content" style={{ padding: '50px' }} />
+                                        </Spin>
+                                    </>
+                                    : < LogList todos={todos} showNotification={showNotification} />}
+                                {loading === 'failed' && <span style={{ color: 'red' }}>{todo.error}</span>}
                             </TodosCol>
                         </Row>
                     </Content>

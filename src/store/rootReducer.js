@@ -13,5 +13,4 @@ export const rootReducer = combineReducers({
     showLog: showLogReducer,
     filter: filterReducer,
     log: loggerReducer,
-    // page: pageReducer
 });
