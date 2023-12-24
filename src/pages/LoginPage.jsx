@@ -21,8 +21,6 @@ export const LoginPage = () => {
   ];
 
   return (
-    <>
-      <PageForm name={'login'} fields={fields} buttonTitle={'Войти'} cb={handleLogin} contextHolder={contextHolder} path={'/register'} />
-    </>
+    <PageForm name={'login'} fields={fields} buttonTitle={'Войти'} cb={handleLogin} contextHolder={contextHolder} path={'/register'} />
   )
 }

@@ -3,7 +3,6 @@ import { Col, Row, Typography, Checkbox } from "antd";
 import { TodosButton } from "./TodosButton";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
-// eslint-disable-next-line react/prop-types
 export const ListItem = ({ todo, handleEditTodo }) => {
     const { Paragraph } = Typography;
     const { id, title, isCompleted } = todo;

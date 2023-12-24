@@ -23,9 +23,7 @@ export const RegisterPage = () => {
     ];
 
     return (
-        <>
-            <PageForm name={'register'} fields={fields} buttonTitle={'Зарегистрироваться'} cb={handleRegister} contextHolder={contextHolder} path={'/login'} />
-        </>
+        <PageForm name={'register'} fields={fields} buttonTitle={'Зарегистрироваться'} cb={handleRegister} contextHolder={contextHolder} path={'/login'} />
     )
 }
 

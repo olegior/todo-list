@@ -1,16 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as api from '../../utils/todos'
 
-export const getTodosThunk = createAsyncThunk('api/getTodos', async () => await api.getTodos());
-
 const createTodosThunk = (action) => createAsyncThunk(
     `api/${action}`,
-    async (payload, { dispatch }) => {
+    async (payload,
+    ) => {
         const response = await api[action](payload);
-        dispatch(getTodosThunk());
         return response;
     })
 
+export const getTodosThunk = createTodosThunk('getTodos');
 export const addTodoThunk = createTodosThunk('addTodo');
 export const deleteTodoThunk = createTodosThunk('deleteTodo');
 export const editTodoThunk = createTodosThunk('editTodo');
@@ -43,6 +42,23 @@ const todos = createSlice({
                 state.loading = 'loading';
                 state.entities = [];
                 state.error = null;
+            })
+            .addCase(addTodoThunk.fulfilled, (state, action) => {
+                state.entities.push(action.payload);
+            })
+            .addCase(toggleTodoThunk.fulfilled, (state, action) => {
+                const response = action.payload[0];
+                state.entities = state.entities
+                    .map(todo => todo.id === response.id ? response : todo);
+            })
+            .addCase(editTodoThunk.fulfilled, (state, action) => {
+                const response = action.payload;
+                state.entities = state.entities
+                    .map(todo => todo.id === response.id ? response : todo);
+            })
+            .addCase(deleteTodoThunk.fulfilled, (state, action) => {
+                state.entities = state.entities
+                    .filter(todo => todo.id !== action.payload.id);
             })
     }
 })

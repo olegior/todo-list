@@ -4,14 +4,13 @@ import { saveToLog } from "../store/slices/loggerSlice";
 
 // /?
 export const withLogger = (Component) => {
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const dispatch = useDispatch();
 
     const createLogString = (action) => {
         const time = new Date().toLocaleString();
         return `${time}: ${action} запись: `;
     }
-
-    // const log = getFromLocalStorage('log') || [];
 
     const getTodo = (json) => {
         try {

@@ -1,4 +1,5 @@
 
+// eslint-disable-next-line react/prop-types
 export const TodosButton = ({ Component = null, onClick = null, checked = false, style = {}, action = '', title, type, id }) => {
     return (
         <>
